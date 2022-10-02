@@ -1,6 +1,5 @@
+#include <Arduino.h>
 #include <LogiMouseLib.h>
-
-
 
 //Create instances for USB, HID Interface Selector, and the Parser
 USB Usb;
@@ -11,11 +10,11 @@ LogiMouseParser mouse;
 bool leftClick = false;
 bool rightClick = false;
 bool middleClick = false;
-bool sideButton1 = false;
-bool sideButton2 = false;
-bool sideButton3 = false;
-bool sideButton4 = false;
-bool sideButton5 = false;
+bool sideButtonG5 = false;
+bool sideButtonG6 = false;
+bool sideButtonG4 = false;
+bool sideButtonG7 = false;
+bool sideButtonG8 = false;
 bool tiltMiddleLeft = false;
 bool tiltMiddleRight = false;
 bool scrollDown = false;
@@ -50,14 +49,14 @@ void loop()
   leftClick = mouse.readButton(LOGI_LEFT_CLICK);
   rightClick = mouse.readButton(LOGI_RIGHT_CLICK);
   middleClick = mouse.readButton(LOGI_MIDDLE_CLICK);
-  sideButton1 = mouse.readButton(LOGI_SIDE_BUTTON1);
-  sideButton2 = mouse.readButton(LOGI_SIDE_BUTTON2);
-  sideButton3 = mouse.readButton(LOGI_SIDE_BUTTON3);
-  sideButton4 = mouse.readButton(LOGI_SIDE_BUTTON4);
-  sideButton5 = mouse.readButton(LOGI_SIDE_BUTTON5);
+  sideButtonG5 = mouse.readButton(LOGI_SIDE_G5);
+  sideButtonG6 = mouse.readButton(LOGI_SIDE_G6);
+  sideButtonG4 = mouse.readButton(LOGI_SIDE_G4);
+  sideButtonG7 = mouse.readButton(LOGI_SIDE_G7);
+  sideButtonG8 = mouse.readButton(LOGI_SIDE_G8);
 
-  mouseX = mouse.readMouseX(); //I am unsure exactly what the numbers are. Specification calls them "X Movement"
-  mouseY = mouse.readMouseY(); //I am unsure exactly what the numbers are. Specification calls them "Y Movement"
+  mouseX = mouse.readMouseX(); //I am unsure exactly what the numbers are. Specification calls it "X Movement"
+  mouseY = mouse.readMouseY(); //I am unsure exactly what the numbers are. Specification calls it "Y Movement"
 
   if(mouse.readTilt() == LOGI_TILT_LEFT){
     tiltMiddleLeft = true;
@@ -99,20 +98,20 @@ void loop()
   Serial.print("Middle: ");
   Serial.print(middleClick);
   Serial.print(" , ");
-  Serial.print("Side 1: ");
-  Serial.print(sideButton1);
+  Serial.print("G5: ");
+  Serial.print(sideButtonG5);
   Serial.print(" , ");
-  Serial.print("Side 2: ");
-  Serial.print(sideButton2);
+  Serial.print("G6 (AIM): ");
+  Serial.print(sideButtonG6);
   Serial.print(" , ");
-  Serial.print("Side 3: ");
-  Serial.print(sideButton3);
+  Serial.print("G4: ");
+  Serial.print(sideButtonG4);
   Serial.print(" , ");
-  Serial.print("Side 4: ");
-  Serial.print(sideButton4);
+  Serial.print("G7: ");
+  Serial.print(sideButtonG7);
   Serial.print(" , ");
-  Serial.print("Side 5: ");
-  Serial.print(sideButton5);
+  Serial.print("G8: ");
+  Serial.print(sideButtonG8);
   Serial.print(" , ");
   Serial.print("Left Tilt: ");
   Serial.print(tiltMiddleLeft);
