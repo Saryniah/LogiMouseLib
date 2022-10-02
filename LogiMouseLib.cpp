@@ -14,56 +14,56 @@ LogiMouseParser::LogiMouseParser(){
 void LogiMouseParser::Parse(USBHID *hid, bool is_prt_id, uint8_t len, uint8_t *buf){
     if(len > 8){ //Side buttons len=9
         bool butBuf[5] = {false};
-        sideButtons = 0;
+        _sideButtons = 0;
         for(uint8_t i = 0; i < 5; i++){
             butBuf[i] = (buf[3]==30+i);
-            sideButtons |= (butBuf[i]<<i);
+            _sideButtons |= (butBuf[i]<<i);
         }
     }else{
-        newButtons = (buf[0]);
-        xbrute = buf[2];
-        ybrute = buf[4];
-        scr = buf[6];
-        tilt = buf[7];
-        if(xbrute > 127){ xm = map(xbrute, 255,128,-1,-127);}
-        else if(xbrute > 0){ xm = xbrute;}
-        if(ybrute > 127){ ym = map(ybrute, 255,128,-1,-127);}
-        else if(ybrute > 0){ym = ybrute;}
+        _newButtons = (buf[0]);
+        _xbrute = buf[2];
+        _ybrute = buf[4];
+        _scr = buf[6]; //BUG: SCROLL Doesn't send interrupt to demark stopped scrolling, value stays until next interrupt
+        _tilt = buf[7];//BUG: TILT Doesn't send interrupt to demark stopped tilting, value stays until next interrupt
+        if(_xbrute > 127){ _xm = map(_xbrute, 255,128,-1,-127);}
+        else if(_xbrute > 0){ _xm = _xbrute;}
+        if(_ybrute > 127){ _ym = map(_ybrute, 255,128,-1,-127);}
+        else if(_ybrute > 0){_ym = _ybrute;}
     }
-    uint8_t buttons = (newButtons | (sideButtons<<3));
+    uint8_t buttons = (_newButtons | (_sideButtons<<3));
     uint8_t i = 7;
     for(uint8_t but_id = 128; but_id >= 1; but_id>>=1){
         if(buttons & but_id){
-            buttonArr[i] = true;
+            _buttonArr[i] = true;
         }else{
-            buttonArr[i] = false;
+            _buttonArr[i] = false;
         }
         i--;
     }
 }
 
 bool LogiMouseParser::readButton(uint8_t button_id){
-    return buttonArr[button_id];
+    return _buttonArr[button_id];
 }
 
 uint8_t LogiMouseParser::readTilt(){
-    return tilt;
+    return _tilt;
 }
 
 int8_t LogiMouseParser::readScroll(){
-    if(scr > 0){
-        return scr==1 ? 1 : -1;
+    if(_scr > 0){
+        return _scr==1 ? 1 : -1;
     }else{
         return 0;
     }
 }
 
-int8_t LogiMouseParser::readMouseXVelocity(){
-    return xm;
+int8_t LogiMouseParser::readMouseX(){
+    return _xm;
 }
 
-int8_t LogiMouseParser::readMouseYVelocity(){
-    return ym;
+int8_t LogiMouseParser::readMouseY(){
+    return _ym;
 }
 
 

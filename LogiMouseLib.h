@@ -14,11 +14,11 @@
 #define LOGI_LEFT_CLICK 0
 #define LOGI_RIGHT_CLICK 1
 #define LOGI_MIDDLE_CLICK 2
-#define LOGI_SIDE_BUTTON1 3
-#define LOGI_SIDE_BUTTON2 4
-#define LOGI_SIDE_BUTTON3 5
-#define LOGI_SIDE_BUTTON4 6
-#define LOGI_SIDE_BUTTON5 7
+#define LOGI_SIDE_G5 3
+#define LOGI_SIDE_G6 4
+#define LOGI_SIDE_G4 5
+#define LOGI_SIDE_G7 6
+#define LOGI_SIDE_G8 7
 #define LOGI_TILT_LEFT 255
 #define LOGI_TILT_RIGHT 1
 #define LOGI_SCROLL_DOWN -1
@@ -47,8 +47,8 @@ class LogiMouseParser : public HIDReportParser{
         virtual void Parse(USBHID *hid, bool is_prt_id, uint8_t len, uint8_t *buf);
         virtual bool readButton(uint8_t button_id);
         virtual uint8_t readTilt();
-        virtual int8_t readMouseXVelocity();
-        virtual int8_t readMouseYVelocity();
+        virtual int8_t readMouseX();
+        virtual int8_t readMouseY();
         virtual int8_t readScroll();
 };
 
